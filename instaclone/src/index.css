@@ -1,0 +1,9 @@
+:root {
+    background-color: rgb(49, 49, 49);
+    color: white;
+}
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+}
