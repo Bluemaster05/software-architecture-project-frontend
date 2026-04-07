@@ -10,29 +10,37 @@ import Register from './Common/pages/Register'
 import Feed from './Posts/pages/Feed'
 import Messages from './Messages/pages/Messages'
 import Profile from './Profile/pages/Profile'
+import { ThemeProvider } from '@emotion/react'
+import { CssBaseline } from '@mui/material'
+import theme from './Common/Theme'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        {/* root redirect */}
-        <Route path="/" element={<Navigate to="/feed" />} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-        {/* auth pages */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
+      <BrowserRouter>
+        <Routes>
+          {/* root redirect */}
+          <Route path="/" element={<Navigate to="/feed" />} />
 
-        {/* authenticated app */}
-        <Route element={<ProtectedRoute ignoreAuth />}>
-          <Route element={<AppLayout />}>
-            <Route path="/feed" element={<Feed />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/profile" element={<Profile />} />
+          {/* auth pages */}
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+
+          {/* authenticated app */}
+          <Route element={<ProtectedRoute ignoreAuth />}>
+            <Route element={<AppLayout />}>
+              <Route path="/feed" element={<Feed />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      
+    </ThemeProvider>
   </StrictMode>,
 )

@@ -1,7 +1,21 @@
+import { Box, Typography } from "@mui/material";
+import postsSampleData from "../SampleData/PostsSampleData";
+import PostCard from "../components/PostCard";
+
 export default function Feed() {
     return (
-        <div>
-            <h1>Feed</h1>
-        </div>
+
+        <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            gap: '20px',
+        }}
+        >
+            <Typography variant="h4" sx={{ marginTop: '20px' }}>
+                Your Feed
+            </Typography>
+            {postsSampleData.map((post) => <PostCard key={post.postId} post={post} />)}
+        </Box>
     );
 }
