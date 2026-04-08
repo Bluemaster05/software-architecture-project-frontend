@@ -3,8 +3,8 @@ import { Chat } from "../types/Chat";
 import { useContext, useState } from "react";
 import AppContext from "../../Common/providors/AppContext";
 
-export default function ChatBox(props: { chat: Chat }) {
-    const { chat} = props;
+export default function ChatBox(props: { chat: Chat, OnClick?: () => void }) {
+    const { chat, OnClick } = props;
     const context = useContext(AppContext)
     const { activeMessagesChatId, setActiveMessagesChatId } = context!;
     let isActive: boolean = false;
@@ -28,6 +28,7 @@ export default function ChatBox(props: { chat: Chat }) {
         backgroundColor: backgroundColor
     }} onClick={() => {
         setActiveMessagesChatId(chat.id.toString());
+        OnClick?.();
     }}
     onMouseOver={() => setHovered(true)}
     onMouseLeave={() => setHovered(false)}
