@@ -21,13 +21,16 @@ const theme = createTheme({
     background: {
       default: '#07070A', // page background
       paper: '#0d0d0e',   // cards, modals
+      
     },
 
     text: {
       primary: '#ffffff',
       // secondary: '#4A525A',
     },
-
+    grey: {
+      100: '#343a3f',
+    },
     divider: '#4A525A',
   },
 });

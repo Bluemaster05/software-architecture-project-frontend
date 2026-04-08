@@ -13,34 +13,37 @@ import Profile from './Profile/pages/Profile'
 import { ThemeProvider } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
 import theme from './Common/Theme'
+import { AppContextProvider } from './Common/providors/AppContext'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <AppContextProvider>
+        <CssBaseline />
 
-      <BrowserRouter>
-        <Routes>
-          {/* root redirect */}
-          <Route path="/" element={<Navigate to="/feed" />} />
+        <BrowserRouter>
+          <Routes>
+            {/* root redirect */}
+            <Route path="/" element={<Navigate to="/feed" />} />
 
-          {/* auth pages */}
-          <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Route>
-
-          {/* authenticated app */}
-          <Route element={<ProtectedRoute ignoreAuth />}>
-            <Route element={<AppLayout />}>
-              <Route path="/feed" element={<Feed />} />
-              <Route path="/messages" element={<Messages />} />
-              <Route path="/profile" element={<Profile />} />
+            {/* auth pages */}
+            <Route element={<AuthLayout />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
             </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      
+
+            {/* authenticated app */}
+            <Route element={<ProtectedRoute ignoreAuth />}>
+              <Route element={<AppLayout />}>
+                <Route path="/feed" element={<Feed />} />
+                <Route path="/messages" element={<Messages />} />
+                <Route path="/profile" element={<Profile />} />
+              </Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+
+      </AppContextProvider>
     </ThemeProvider>
   </StrictMode>,
 )

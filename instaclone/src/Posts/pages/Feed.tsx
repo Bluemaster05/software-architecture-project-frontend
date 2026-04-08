@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import postsSampleData from "../SampleData/PostsSampleData";
+import postsSampleData from "../sampleData/PostsSampleData";
 import PostCard from "../components/PostCard";
 
 export default function Feed() {
