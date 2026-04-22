@@ -87,7 +87,8 @@ export default function AppLayout() {
                 <NavButtonDesktop
                     expanded={showExpanded}
                     Icon={<SettingsIcon />}
-                    label="Settings" />
+                    label="Settings" 
+                    onClick={() => navigate('/settings')} />
             </Box>
         </Box>
 }

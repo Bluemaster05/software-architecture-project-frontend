@@ -14,6 +14,9 @@ import { ThemeProvider } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
 import theme from './Common/Theme'
 import { AppContextProvider } from './Common/providors/AppContext'
+import AuthListener from './Common/components/AuthListener'
+import Settings from './Common/pages/Settings'
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -22,6 +25,7 @@ createRoot(document.getElementById('root')!).render(
         <CssBaseline />
 
         <BrowserRouter>
+          <AuthListener />
           <Routes>
             {/* root redirect */}
             <Route path="/" element={<Navigate to="/feed" />} />
@@ -38,6 +42,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="/feed" element={<Feed />} />
                 <Route path="/messages" element={<Messages />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/settings" element={<Settings />} />
               </Route>
             </Route>
           </Routes>
