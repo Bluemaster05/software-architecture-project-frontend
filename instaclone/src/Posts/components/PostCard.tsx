@@ -5,11 +5,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CommentIcon from '@mui/icons-material/Comment'
 import PostDialog from "./PostDialog";
+import { useNavigate } from "react-router";
 
-export default function PostCard(props: { post: Post; disableDialog?: boolean, mobileWidth?: string }) {
-    const { post, disableDialog, mobileWidth } = props;
-    const { username, userProfilePictureUrl, imgUrl, caption, likes, comments } = post;
+export default function PostCard(props: { post: Post; disableDialog?: boolean, mobileWidth?: string, notClickable?: boolean }) {
+    const { post, disableDialog, mobileWidth, notClickable } = props;
+    const { username, userProfilePictureUrl, imgUrl, caption, likes, comments, postId } = post;
 
+    const navigate = useNavigate();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -19,15 +21,22 @@ export default function PostCard(props: { post: Post; disableDialog?: boolean, m
     return <Card sx={{
         width: isMobile ? mobileWidth || '80%' : '500px',
         height: 'fit-content',
+        
     }}>
         <CardHeader
-            avatar={<Avatar src={userProfilePictureUrl}>{username.charAt(0)}</Avatar>}
+            avatar={<Avatar  src={userProfilePictureUrl}>{username.charAt(0)}</Avatar>}
             title={username}
+            onClick={() => navigate(`/profile/${username}`)}
         />
         <CardMedia
             component="img"
             image={imgUrl}
             alt={caption}
+            onClick={()=>{
+                if (!notClickable) {
+                    navigate(`/post/${postId}`)
+                }
+            }}
         />
         <CardContent>
             <Typography variant="body1">

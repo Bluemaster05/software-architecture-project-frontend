@@ -16,6 +16,7 @@ import theme from './Common/Theme'
 import { AppContextProvider } from './Common/providors/AppContext'
 import AuthListener from './Common/components/AuthListener'
 import Settings from './Common/pages/Settings'
+import PostPage from './Posts/pages/PostPage'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -37,9 +38,10 @@ createRoot(document.getElementById('root')!).render(
             </Route>
 
             {/* authenticated app */}
-            <Route element={<ProtectedRoute ignoreAuth />}>
+            <Route element={<ProtectedRoute ignoreAuth={false} />}>
               <Route element={<AppLayout />}>
                 <Route path="/feed" element={<Feed />} />
+                <Route path="/post/:id" element={<PostPage />} />
                 <Route path="/messages" element={<Messages />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />
