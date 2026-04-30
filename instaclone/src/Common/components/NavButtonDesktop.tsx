@@ -12,7 +12,9 @@ export default function NavButtonDesktop(props: {
     const [hovered, setHovered] = useState(false);
     
     const location = useLocation();
-    const selected  = location.pathname.startsWith(`/${label.toLowerCase()}`);
+    const selected = label === "Profile" ? 
+      location.pathname == '/profile/me' 
+    : location.pathname.startsWith(`/${label.toLowerCase()}`);
 
     let backgroundColor = "transparent";
     if (selected) {

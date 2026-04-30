@@ -1,8 +1,13 @@
 import { Message } from "./Message";
 
 export interface Chat {
-    id: number;
-    name: string;
-    imgSrc: string;
-    messages: Message[];
+    id: string;
+    name?: string | undefined;
+    lastMessage?: Message | undefined;
+    unreadCount: number;
+    members: {
+        userId: number;
+        username: string;
+        imgSrc: string;
+    }[];
 }

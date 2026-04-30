@@ -1,4 +1,4 @@
-import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import { Chat } from "../types/Chat";
 import ChatBox from "./ChatBox";
 import { useState } from "react";
@@ -6,8 +6,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import BackArrowIcon from '@mui/icons-material/ArrowBackIos';
 
 
-export default function ChatSideBar(props: { chats: Chat[] }) {
-    const { chats } = props;
+export default function ChatSideBar(props: { chats: Chat[], openNewChat: React.Dispatch<React.SetStateAction<boolean>> }) {
+    const { chats, openNewChat } = props;
     const theme = useTheme();
     const ismobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -53,7 +53,8 @@ export default function ChatSideBar(props: { chats: Chat[] }) {
                 <Box sx={{
                     overflowY: 'scroll',
                 }}>
-                    {chats.map(chat => <ChatBox key={chat.id} chat={chat} OnClick={()=>{ setOpen(false)}} />)}
+                    <Button variant="contained" color="primary" fullWidth onClick={() => openNewChat(true)}>New Chat</Button>
+                    {chats.map(chat => <ChatBox key={chat.id} chat={chat} OnClick={() => { setOpen(false) }} />)}
                 </Box>
             </Box>
         </>;
@@ -67,6 +68,7 @@ export default function ChatSideBar(props: { chats: Chat[] }) {
         borderRight: '1px solid',
         borderColor: 'divider'
     }}>
+        <Button variant="contained" color="primary" fullWidth onClick={() => openNewChat(true)}>New Chat</Button>
         {chats.map(chat => <ChatBox key={chat.id} chat={chat} />)}
     </Box>
 }

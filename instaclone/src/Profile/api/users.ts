@@ -35,6 +35,13 @@ export interface paths {
                     };
                     content?: never;
                 };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
             };
         };
         delete?: never;
@@ -76,6 +83,411 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/auth/jwt-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["JwtDto"];
+                        "application/json": components["schemas"]["JwtDto"];
+                        "text/json": components["schemas"]["JwtDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/{id}/friends": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["UserMinimizedDto"][];
+                        "application/json": components["schemas"]["UserMinimizedDto"][];
+                        "text/json": components["schemas"]["UserMinimizedDto"][];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["UserIdDto"];
+                    "text/json": components["schemas"]["UserIdDto"];
+                    "application/*+json": components["schemas"]["UserIdDto"];
+                };
+            };
+            responses: {
+                /** @description Created */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Conflict */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["Error409Dto"];
+                        "application/json": components["schemas"]["Error409Dto"];
+                        "text/json": components["schemas"]["Error409Dto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/{id}/friends/{friendId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                    friendId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/{id}/friends/requests/sent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["UserMinimizedDto"][];
+                        "application/json": components["schemas"]["UserMinimizedDto"][];
+                        "text/json": components["schemas"]["UserMinimizedDto"][];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/{id}/friends/requests/received": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["UserMinimizedDto"][];
+                        "application/json": components["schemas"]["UserMinimizedDto"][];
+                        "text/json": components["schemas"]["UserMinimizedDto"][];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/{id}/friends/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["UserIdDto"];
+                    "text/json": components["schemas"]["UserIdDto"];
+                    "application/*+json": components["schemas"]["UserIdDto"];
+                };
+            };
+            responses: {
+                /** @description Created */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Conflict */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["Error409Dto"];
+                        "application/json": components["schemas"]["Error409Dto"];
+                        "text/json": components["schemas"]["Error409Dto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/{id}/friends/requests/{friendId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                    friendId: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/user": {
         parameters: {
             query?: never;
@@ -86,7 +498,8 @@ export interface paths {
         get: {
             parameters: {
                 query?: {
-                    query?: string;
+                    Username?: string;
+                    ExactMatch?: boolean;
                 };
                 header?: never;
                 path?: never;
@@ -96,6 +509,17 @@ export interface paths {
             responses: {
                 /** @description OK */
                 200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["UserMinimizedDto"][];
+                        "application/json": components["schemas"]["UserMinimizedDto"][];
+                        "text/json": components["schemas"]["UserMinimizedDto"][];
+                    };
+                };
+                /** @description Not Found */
+                404: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -119,12 +543,16 @@ export interface paths {
                 };
             };
             responses: {
-                /** @description OK */
-                200: {
+                /** @description Created */
+                201: {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "text/plain": components["schemas"]["UserPrivateDto"];
+                        "application/json": components["schemas"]["UserPrivateDto"];
+                        "text/json": components["schemas"]["UserPrivateDto"];
+                    };
                 };
             };
         };
@@ -157,6 +585,17 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
+                    content: {
+                        "text/plain": components["schemas"]["UserPublicDto"];
+                        "application/json": components["schemas"]["UserPublicDto"];
+                        "text/json": components["schemas"]["UserPublicDto"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
                     content?: never;
                 };
             };
@@ -174,8 +613,22 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description OK */
-                200: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -196,20 +649,32 @@ export interface paths {
             };
             requestBody?: {
                 content: {
-                    "application/json": {
-                        [key: string]: components["schemas"]["JsonNode"];
-                    };
-                    "text/json": {
-                        [key: string]: components["schemas"]["JsonNode"];
-                    };
-                    "application/*+json": {
-                        [key: string]: components["schemas"]["JsonNode"];
-                    };
+                    "application/json": components["schemas"]["UpdateUserRequestDto"];
+                    "text/json": components["schemas"]["UpdateUserRequestDto"];
+                    "application/*+json": components["schemas"]["UpdateUserRequestDto"];
                 };
             };
             responses: {
                 /** @description OK */
                 200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["UserPrivateDto"];
+                        "application/json": components["schemas"]["UserPrivateDto"];
+                        "text/json": components["schemas"]["UserPrivateDto"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -240,6 +705,70 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
+                    content: {
+                        "text/plain": components["schemas"]["UserPrivateDto"];
+                        "application/json": components["schemas"]["UserPrivateDto"];
+                        "text/json": components["schemas"]["UserPrivateDto"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/user/{id}/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProfileDto"];
+                        "application/json": components["schemas"]["ProfileDto"];
+                        "text/json": components["schemas"]["ProfileDto"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
                     content?: never;
                 };
             };
@@ -257,21 +786,65 @@ export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
         CreateUserRequestDto: {
-            username?: string | null;
-            email?: string | null;
-            password?: string | null;
+            username: string;
+            /** Format: email */
+            email: string;
+            password: string;
         };
-        JsonNode: {
-            options?: components["schemas"]["JsonNodeOptions"];
-            parent?: components["schemas"]["JsonNode"];
-            root?: components["schemas"]["JsonNode"];
+        Error409Dto: {
+            message: string;
         };
-        JsonNodeOptions: {
-            propertyNameCaseInsensitive?: boolean;
+        JwtDto: {
+            jwtKey: string;
         };
         LoginDto: {
+            username: string;
+            password: string;
+        };
+        ProfileDto: {
+            /** Format: int32 */
+            id: number;
+            username: string;
+            biography: string;
+            /** Format: date-time */
+            joinedOn: string;
+            /** Format: int32 */
+            readonly numFriends: number;
+            relationshipToUser: components["schemas"]["Relationship"];
+        };
+        /** @enum {string} */
+        Relationship: "Stranger" | "Friend" | "RequestSent" | "RequestReceived";
+        UpdateUserRequestDto: {
             username?: string | null;
-            password?: string | null;
+            /** Format: email */
+            email?: string | null;
+            biography?: string | null;
+        };
+        UserIdDto: {
+            /** Format: int32 */
+            id: number;
+        };
+        UserMinimizedDto: {
+            /** Format: int32 */
+            id: number;
+            username: string;
+        };
+        UserPrivateDto: {
+            /** Format: int32 */
+            id: number;
+            username: string;
+            email: string;
+            biography: string;
+            /** Format: date-time */
+            joinedOn: string;
+        };
+        UserPublicDto: {
+            /** Format: int32 */
+            id: number;
+            username: string;
+            biography: string;
+            /** Format: date-time */
+            joinedOn: string;
         };
     };
     responses: never;

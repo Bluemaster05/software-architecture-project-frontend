@@ -3,14 +3,15 @@ import { Chat } from "../types/Chat";
 import SendIcon from '@mui/icons-material/Send';
 import ProfileSideBar from "./ProfileSideBar";
 import { useEffect, useRef, useState } from "react";
+import { Message } from "../types/Message";
 
-export default function MessagesBox(props: { chat: Chat | null }) {
-    const { chat } = props;
+export default function MessagesBox(props: { messagesHere: Message[] | null }) {
+    const { messagesHere } = props;
     const chatRef = useRef<HTMLDivElement>(null);
     const suppressTopLoaderRef = useRef(false);
     const topLoaderTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const [messages, setMessages] = useState(chat ? chat.messages : []);
+    const [messages, setMessages] = useState(messagesHere || []);
     const [atTopMessages, setAtTopMessages] = useState(false);
     
     const theme = useTheme();
@@ -18,7 +19,7 @@ export default function MessagesBox(props: { chat: Chat | null }) {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
-        setMessages(chat ? chat.messages : []);
+        setMessages(messagesHere || []);
         setAtTopMessages(false);
     }, [chat?.id, chat]);
 

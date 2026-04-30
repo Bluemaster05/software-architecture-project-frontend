@@ -82,7 +82,7 @@ export default function AppLayout() {
                     expanded={showExpanded}
                     Icon={<AccountBoxIcon />}
                     label="Profile"
-                    onClick={() => navigate('/profile')}
+                    onClick={() => navigate('/profile/me')}
                 />
                 <NavButtonDesktop
                     expanded={showExpanded}

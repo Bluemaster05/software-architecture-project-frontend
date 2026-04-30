@@ -1,26 +1,38 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router";
 import { userApiClient } from "../../Profile/api/client";
 import { Box, Card, CircularProgress, Typography } from "@mui/material";
+import AppContext from "../providors/AppContext";
 // import { useAuth } from "../auth/useAuth";
 
 function ProtectedRoute(props: { ignoreAuth?: boolean }) {
+    const context = useContext(AppContext);
+    const { user, setUser } = context!;
     const { ignoreAuth } = props;
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<any>(null);
+
 
     useEffect(() => {
         const checkAuth = async () => {
             try {
-            if (!ignoreAuth) {
-                const { data, response, error} = await userApiClient.GET("/api/user/me");
-                if (response.status !== 200) {
-                    return <Navigate to="/login" replace />;
-                } else {
-                    setLoading(false);
-                    setUser({id: "temp"});
+                if (!ignoreAuth) {
+                    const { data, response, error } = await userApiClient.GET("/api/user/me");
+                    if (response.status !== 200) {
+                        return <Navigate to="/login" replace />;
+                    } else if (response.ok && data) {
+                        setUser({
+                            id: data.id,
+                            username: data.username,
+                            email: data.email,
+                            biography: data.biography,
+                            joinedOn: data.joinedOn,
+                            numFriends: undefined,
+                            relationToUser: undefined
+                        });
+                        setLoading(false);
+                    }
                 }
-            }} catch {
+            } catch {
                 setLoading(false);
             }
         };
@@ -28,7 +40,7 @@ function ProtectedRoute(props: { ignoreAuth?: boolean }) {
     }, [ignoreAuth]);
 
     if (!ignoreAuth) {
-        
+
         if (loading) {
             return (
                 <Box sx={{
@@ -44,10 +56,10 @@ function ProtectedRoute(props: { ignoreAuth?: boolean }) {
                 </Box>
             );
         }
-
         if (!user) {
             return <Navigate to="/login" replace />;
         }
+
     }
 
     return <Outlet />;

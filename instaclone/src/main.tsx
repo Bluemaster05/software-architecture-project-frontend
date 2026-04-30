@@ -19,6 +19,7 @@ import Settings from './Common/pages/Settings'
 import PostPage from './Posts/pages/PostPage'
 
 
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
@@ -43,7 +44,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="/feed" element={<Feed />} />
                 <Route path="/post/:id" element={<PostPage />} />
                 <Route path="/messages" element={<Messages />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/settings" element={<Settings />} />
               </Route>
             </Route>

@@ -1,9 +1,7 @@
 export interface Message {
-    id: number;
-    sender: {
-        username: string;
-        imgSrc: string;
-    }
+    id: string;
+    senderId: number;
+    type: "text" | "system";
     content: string;
-    timestamp: string;
+    createdAt: string;
 }
