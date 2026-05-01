@@ -4,11 +4,24 @@ import { userApiClient } from "../api/client";
 import { useContext, useState } from "react";
 import AppContext from "../../Common/providors/AppContext";
 
-export default function ProfileCard(props: { user: User }) {
+export default function ProfileCard(props: { user: User; setReloadProfile: React.Dispatch<React.SetStateAction<boolean>> }) {
     const context = useContext(AppContext);
     const me = context.user;
-    const { user, isMe } = props;
+    const { user } = props;
     const [friendRequestSent, setFriendRequestSent] = useState(false);
+
+    const unfriend = async () => {
+        if (me) {
+            const { response, data } = await userApiClient.DELETE('/api/user/{id}/friends/{friendId}', {
+                params: {
+                    path: { id: me.id, friendId: user.id },
+                }
+            });
+            if (response.ok) {
+                props.setReloadProfile(true);
+            }
+        }
+    };
 
     return <>
         <Card sx={{
@@ -21,7 +34,7 @@ export default function ProfileCard(props: { user: User }) {
         }}>
             <CardHeader title={<Typography variant="h6">{user.username}</Typography>}
                 subheader={<Typography variant="body1">Joined on {new Date(user.joinedOn || '').toLocaleDateString()}</Typography>}
-                avatar={<Avatar sx={{
+                avatar={<Avatar src={user.profilePictureUrl} sx={{
                     width: 70, height: 70
                 }}>{user.username.charAt(0).toUpperCase()}</Avatar>} />
             <CardContent sx={{
@@ -30,9 +43,9 @@ export default function ProfileCard(props: { user: User }) {
                 flexDirection: 'column',
                 width: '100%',
             }}>
-                <Typography variant="body1">{user.biography || isMe ? "You should add a bio!" : "No biography available."}</Typography>
+                <Typography variant="body1">{user.biography || "No biography available."}</Typography>
                 <Box sx={{ width: '100%' }}>
-                    {!isMe && user.relationToUser === "Stranger" && (
+                    {user.relationToUser === "Stranger" && (
                         <Button variant="contained" color="primary" onClick={async () => {
                             if (me) {
                                 const { response } = await userApiClient.POST("/api/user/{id}/friends/requests", {
@@ -52,22 +65,18 @@ export default function ProfileCard(props: { user: User }) {
                             {friendRequestSent ? "Request Sent" : "Send Friend Request"}
                         </Button>
                     )}
-                    {!isMe && user.relationToUser === "RequestSent" && (
+                    {user.relationToUser === "RequestSent" && (
                         <Button variant="contained" color="primary" disabled>
                             Request Sent
+                        </Button>
+                    )}
+                    {user.relationToUser === "Friend" && (
+                        <Button variant="contained" color="error" onClick={unfriend}>
+                            UnFriend
                         </Button>
                     )}
                 </Box>
             </CardContent>
         </Card>
-        {isMe && <Card sx={{
-            marginTop: '20px',
-            width: '80%',
-        }}>
-            <CardContent>
-                <Typography variant="h6">You have {user.numFriends || 0} Friends. {user.numFriends === 0 || !user.numFriends ? "Send some friend requests!" : ""}</Typography>
-
-            </CardContent>
-        </Card>}
     </>
 }

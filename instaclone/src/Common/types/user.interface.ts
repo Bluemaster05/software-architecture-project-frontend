@@ -6,4 +6,5 @@ export default interface User {
     joinedOn: string | undefined
     numFriends: number | undefined;
     relationToUser: "Stranger" | "Friend" | "RequestSent" | "RequestReceived" | undefined;
+    profilePictureUrl: string;
 }

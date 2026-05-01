@@ -10,7 +10,7 @@ const AppContext = createContext<AppContextType>({
 });
 
 export function AppContextProvider({ children }: { children: ReactNode }) {
-    const [activeMessagesChatId, setActiveMessagesChatId] = useState<string | null>(sampleChats[0].id.toString());
+    const [activeMessagesChatId, setActiveMessagesChatId] = useState<string | null>(null);
     const [user, setUser] = useState<User | null>(null);
 
     return (

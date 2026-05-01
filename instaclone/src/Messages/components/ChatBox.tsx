@@ -27,13 +27,15 @@ export default function ChatBox(props: { chat: Chat, OnClick?: () => void }) {
         gap: "10px",
         backgroundColor: backgroundColor
     }} onClick={() => {
-        setActiveMessagesChatId(chat.id.toString());
+        setActiveMessagesChatId(chat.id);
         OnClick?.();
     }}
     onMouseOver={() => setHovered(true)}
     onMouseLeave={() => setHovered(false)}
     >
-        <Avatar src={chat.imgSrc} />
+        <Avatar src={chat.members.filter((m) => m.userId !== context?.user?.id)[0].imgSrc}>
+            {chat.name?.charAt(0).toUpperCase() || 'Chat'}
+        </Avatar>
         <Typography variant="subtitle1">
             {chat.name}
         </Typography>

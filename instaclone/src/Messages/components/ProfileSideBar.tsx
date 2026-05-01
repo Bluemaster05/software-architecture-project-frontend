@@ -1,9 +1,34 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import { Profile } from "../../Common/types/Profile";
+import { useEffect, useState } from "react";
+import { userApiClient } from "../../Profile/api/client";
 
-export default function ProfileSideBar(props: { profile: Profile }) {
-    const { profile } = props;
-    const { username, imgSrc, bio, postsCount, memberSince } = profile;
+export default function ProfileSideBar(props: { userId: number | undefined }) {
+    const { userId } = props;
+    const [profile, setProfile] = useState<Profile | null>(null);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            if (userId) {
+                const { response, data} = await userApiClient.GET("/api/user/{id}/profile", {
+                    params: { path: { id: userId } }
+                })
+                if (response.ok && data) {
+                    setProfile({
+                        bio: data.biography,
+                        imgSrc: data.profilePicUrl,
+                        memberSince: new Date(data.joinedOn).toLocaleDateString(),
+                        postsCount: 0,
+                        username: data.username,
+                        id: data.id
+                    });
+                }
+            }
+        }
+        fetchProfile();
+    }, [userId]);
+
+    const { username, imgSrc, bio, postsCount, memberSince } = profile || {};
 
     return <Box sx={{
         padding: "20px 40px",

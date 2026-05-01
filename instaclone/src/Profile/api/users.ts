@@ -75,6 +75,13 @@ export interface paths {
                     };
                     content?: never;
                 };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
             };
         };
         delete?: never;
@@ -518,6 +525,13 @@ export interface paths {
                         "text/json": components["schemas"]["UserMinimizedDto"][];
                     };
                 };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
                 /** @description Not Found */
                 404: {
                     headers: {
@@ -562,6 +576,102 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/user/{id}/picture": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "multipart/form-data": {
+                        /** Format: binary */
+                        ProfilePic: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Created */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/user/{id}": {
         parameters: {
             query?: never;
@@ -590,6 +700,13 @@ export interface paths {
                         "application/json": components["schemas"]["UserPublicDto"];
                         "text/json": components["schemas"]["UserPublicDto"];
                     };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
                 };
                 /** @description Not Found */
                 404: {
@@ -711,6 +828,13 @@ export interface paths {
                         "text/json": components["schemas"]["UserPrivateDto"];
                     };
                 };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
                 /** @description Not Found */
                 404: {
                     headers: {
@@ -808,6 +932,7 @@ export interface components {
             biography: string;
             /** Format: date-time */
             joinedOn: string;
+            profilePicUrl: string;
             /** Format: int32 */
             readonly numFriends: number;
             relationshipToUser: components["schemas"]["Relationship"];
@@ -828,6 +953,7 @@ export interface components {
             /** Format: int32 */
             id: number;
             username: string;
+            profilePicUrl: string;
         };
         UserPrivateDto: {
             /** Format: int32 */
@@ -837,6 +963,7 @@ export interface components {
             biography: string;
             /** Format: date-time */
             joinedOn: string;
+            profilePicUrl: string;
         };
         UserPublicDto: {
             /** Format: int32 */
@@ -845,6 +972,7 @@ export interface components {
             biography: string;
             /** Format: date-time */
             joinedOn: string;
+            profilePicUrl: string;
         };
     };
     responses: never;

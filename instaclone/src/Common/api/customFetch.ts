@@ -8,5 +8,9 @@ export const customFetch: typeof fetch = async (input, init) => {
     window.dispatchEvent(new Event("unauthorized"));
   }
 
+  if(res.status === 500) {
+    window.dispatchEvent(new Event("servererror"));
+  }
+
   return res;
 };

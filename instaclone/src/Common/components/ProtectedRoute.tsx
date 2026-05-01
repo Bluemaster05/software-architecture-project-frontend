@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router";
-import { userApiClient } from "../../Profile/api/client";
+import { Navigate, Outlet, useNavigate } from "react-router";
+import { userApiBasePath, userApiClient } from "../../Profile/api/client";
 import { Box, Card, CircularProgress, Typography } from "@mui/material";
 import AppContext from "../providors/AppContext";
 // import { useAuth } from "../auth/useAuth";
 
 function ProtectedRoute(props: { ignoreAuth?: boolean }) {
     const context = useContext(AppContext);
+    const navigate = useNavigate();
     const { user, setUser } = context!;
     const { ignoreAuth } = props;
     const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ function ProtectedRoute(props: { ignoreAuth?: boolean }) {
                 if (!ignoreAuth) {
                     const { data, response, error } = await userApiClient.GET("/api/user/me");
                     if (response.status !== 200) {
-                        return <Navigate to="/login" replace />;
+                        navigate("/login");
                     } else if (response.ok && data) {
                         setUser({
                             id: data.id,
@@ -27,7 +28,8 @@ function ProtectedRoute(props: { ignoreAuth?: boolean }) {
                             biography: data.biography,
                             joinedOn: data.joinedOn,
                             numFriends: undefined,
-                            relationToUser: undefined
+                            relationToUser: undefined,
+                            profilePictureUrl: userApiBasePath + '/' + data.profilePicUrl
                         });
                         setLoading(false);
                     }

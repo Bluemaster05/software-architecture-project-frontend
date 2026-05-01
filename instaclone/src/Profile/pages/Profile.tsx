@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { userApiClient } from "../api/client";
+import { userApiBasePath, userApiClient } from "../api/client";
 import AppContext from "../../Common/providors/AppContext";
 import ProfileCard from "../components/ProfileCard";
 import { useParams } from "react-router";
@@ -12,9 +12,9 @@ export default function Profile() {
     const context = useContext(AppContext);
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    const [realoadProfile, setReloadProfile] = useState(false);
     
-    useEffect(() => {
-        const fetchUser = async () => {
+    const fetchUser = async () => {
         if (id === 'me') {
             setUser(context?.user || null);
             setLoading(false);
@@ -32,15 +32,19 @@ export default function Profile() {
                     biography: data.biography,
                     joinedOn: data.joinedOn,
                     numFriends: data.numFriends,
-                    relationToUser: data.relationshipToUser
+                    relationToUser: data.relationshipToUser,
+                    profilePictureUrl: userApiBasePath + '/' + data.profilePicUrl
                 });
                 setLoading(false);
             } else {
                 setLoading(false);
             }
         }}
+    
+    useEffect(() => {
         fetchUser();
-    }, [id])
+        setReloadProfile(false);
+    }, [id, realoadProfile]);
 
 
     if (loading) {
@@ -69,7 +73,7 @@ export default function Profile() {
             flexDirection: 'column',
         }}>
             {id === 'me' && user && <YourProfileCard />}
-            {id !== 'me' && user && <ProfileCard user={user} />}
+            {id !== 'me' && user && <ProfileCard user={user} setReloadProfile={setReloadProfile} />}
         </Box>
     );
 }
