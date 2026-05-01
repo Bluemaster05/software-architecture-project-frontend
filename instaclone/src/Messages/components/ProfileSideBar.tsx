@@ -1,7 +1,7 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import { Profile } from "../../Common/types/Profile";
 import { useEffect, useState } from "react";
-import { userApiClient } from "../../Profile/api/client";
+import { userApiBasePath, userApiClient } from "../../Profile/api/client";
 
 export default function ProfileSideBar(props: { userId: number | undefined }) {
     const { userId } = props;
@@ -37,7 +37,7 @@ export default function ProfileSideBar(props: { userId: number | undefined }) {
         height: '100%',
     }}>
         <Box sx={{ display: "flex", justifyContent: 'center', alignItems: "center", flexDirection: 'column', gap: '20px' }}>
-            <Avatar sx={{ width: '100px', height: '100px' }} src={imgSrc} />
+            <Avatar sx={{ width: '100px', height: '100px' }} src={userApiBasePath + "/" + imgSrc} />
             <Typography variant="h5">
                 {username}
             </Typography>

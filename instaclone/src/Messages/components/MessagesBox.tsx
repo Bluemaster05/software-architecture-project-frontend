@@ -5,6 +5,7 @@ import { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState }
 import { Message } from "../types/Message";
 import AppContext from "../../Common/providors/AppContext";
 import { chatsApiClient } from "../api/client";
+import { userApiBasePath } from "../../Profile/api/client";
 
 // export default function MessagesBox(props: { members: { userId: number, username: string, imgSrc: string }[], chatId: string | null }) {
 //     const { members, chatId } = props;
@@ -417,7 +418,7 @@ export default function MessagesBox({
                                         key={message.id}
                                         sx={{ display: "flex", p: 1.5, gap: 1.5 }}
                                     >
-                                        <Avatar src={member?.imgSrc} />
+                                        <Avatar src={userApiBasePath + "/" + member?.imgSrc} />
                                         <Box>
                                             <Typography variant="subtitle2">
                                                 {member?.username || "Unknown"} •{" "}

@@ -3,6 +3,7 @@ import User from "../../Common/types/user.interface";
 import { userApiClient } from "../api/client";
 import { useContext, useState } from "react";
 import AppContext from "../../Common/providors/AppContext";
+import ProfilePosts from "./ProfilePosts.tsx";
 
 export default function ProfileCard(props: { user: User; setReloadProfile: React.Dispatch<React.SetStateAction<boolean>> }) {
     const context = useContext(AppContext);
@@ -12,7 +13,7 @@ export default function ProfileCard(props: { user: User; setReloadProfile: React
 
     const unfriend = async () => {
         if (me) {
-            const { response, data } = await userApiClient.DELETE('/api/user/{id}/friends/{friendId}', {
+            const { response } = await userApiClient.DELETE('/api/user/{id}/friends/{friendId}', {
                 params: {
                     path: { id: me.id, friendId: user.id },
                 }
@@ -78,5 +79,6 @@ export default function ProfileCard(props: { user: User; setReloadProfile: React
                 </Box>
             </CardContent>
         </Card>
+        <ProfilePosts userId={user.id} emptyMessage={`${user.username} has not posted yet.`} />
     </>
 }

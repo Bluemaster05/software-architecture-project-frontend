@@ -2,6 +2,7 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { Chat } from "../types/Chat";
 import { useContext, useState } from "react";
 import AppContext from "../../Common/providors/AppContext";
+import { userApiBasePath } from "../../Profile/api/client";
 
 export default function ChatBox(props: { chat: Chat, OnClick?: () => void }) {
     const { chat, OnClick } = props;
@@ -33,7 +34,7 @@ export default function ChatBox(props: { chat: Chat, OnClick?: () => void }) {
     onMouseOver={() => setHovered(true)}
     onMouseLeave={() => setHovered(false)}
     >
-        <Avatar src={chat.members.filter((m) => m.userId !== context?.user?.id)[0].imgSrc}>
+        <Avatar src={userApiBasePath + "/" + chat.members.filter((m) => m.userId !== context?.user?.id)[0].imgSrc}>
             {chat.name?.charAt(0).toUpperCase() || 'Chat'}
         </Avatar>
         <Typography variant="subtitle1">

@@ -13,15 +13,55 @@ export interface paths {
         };
         /**
          * Get Posts
-         * @description Retrieve all posts.
+         * @description Retrieve all posts sorted by most recent.
          */
         get: operations["get_posts_posts_get"];
         put?: never;
         /**
          * Create Post
-         * @description Create a new post with a server-generated postId and timestamp. Accepts a JPEG or PNG image.
+         * @description Create a new post attributed to the authenticated user.
          */
         post: operations["create_post_posts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/posts/feed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Feed
+         * @description Retrieve posts from the current user and their friends, sorted by most recent.
+         */
+        get: operations["get_feed_posts_feed_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/posts/user/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get User Posts
+         * @description Retrieve all posts by a specific user, sorted by most recent.
+         */
+        get: operations["get_user_posts_posts_user__user_id__get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -42,13 +82,13 @@ export interface paths {
         get: operations["get_post_posts__post_id__get"];
         /**
          * Update Post
-         * @description Update caption and/or image of a post. Supply only the fields to change.
+         * @description Update caption and/or image of a post. Only the post owner may update it.
          */
         put: operations["update_post_posts__post_id__put"];
         post?: never;
         /**
          * Delete Post
-         * @description Delete a post by its ID and remove the associated image from disk.
+         * @description Delete a post. Only the post owner may delete it.
          */
         delete: operations["delete_post_posts__post_id__delete"];
         options?: never;
@@ -66,13 +106,13 @@ export interface paths {
         get?: never;
         /**
          * Increment Likes
-         * @description Increment the like count of a post by 1.
+         * @description Like a post. Idempotent — liking twice has no extra effect.
          */
         put: operations["increment_likes_posts__post_id__likes_put"];
         post?: never;
         /**
          * Decrement Likes
-         * @description Decrement the like count of a post by 1, floored at 0.
+         * @description Unlike a post. Idempotent — unliking when not liked is a no-op.
          */
         delete: operations["decrement_likes_posts__post_id__likes_delete"];
         options?: never;
@@ -91,7 +131,7 @@ export interface paths {
         put?: never;
         /**
          * Add Comment
-         * @description Add a new comment to a post and return the created comment.
+         * @description Add a new comment attributed to the authenticated user.
          */
         post: operations["add_comment_posts__post_id__comments_post"];
         delete?: never;
@@ -112,7 +152,7 @@ export interface paths {
         post?: never;
         /**
          * Delete Comment
-         * @description Remove a comment from a post by commentId.
+         * @description Remove a comment. Only the comment author may delete it.
          */
         delete: operations["delete_comment_posts__post_id__comments__comment_id__delete"];
         options?: never;
@@ -130,13 +170,13 @@ export interface paths {
         get?: never;
         /**
          * Like Comment
-         * @description Increment the like count on a comment by 1.
+         * @description Increment the like count on a comment by 1. Requires authentication.
          */
         put: operations["like_comment_posts__post_id__comments__comment_id__likes_put"];
         post?: never;
         /**
          * Unlike Comment
-         * @description Decrement the like count on a comment by 1, floored at 0.
+         * @description Decrement the like count on a comment by 1, floored at 0. Requires authentication.
          */
         delete: operations["unlike_comment_posts__post_id__comments__comment_id__likes_delete"];
         options?: never;
@@ -150,12 +190,6 @@ export interface components {
     schemas: {
         /** Body_create_post_posts_post */
         Body_create_post_posts_post: {
-            /** Userid */
-            userId: string;
-            /** Username */
-            username: string;
-            /** Userprofilepictureurl */
-            userProfilePictureUrl: string;
             /** Caption */
             caption: string;
             /** Image */
@@ -190,12 +224,6 @@ export interface components {
         };
         /** CommentCreate */
         CommentCreate: {
-            /** Userid */
-            userId: string;
-            /** Username */
-            username: string;
-            /** Userprofilepictureurl */
-            userProfilePictureUrl: string;
             /** Text */
             text: string;
         };
@@ -225,6 +253,11 @@ export interface components {
              * @default 0
              */
             likes: number;
+            /**
+             * Likedbycurrentuser
+             * @default false
+             */
+            likedByCurrentUser: boolean;
             /**
              * Comments
              * @default []
@@ -293,6 +326,57 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Post"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_feed_posts_feed_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Post"][];
+                };
+            };
+        };
+    };
+    get_user_posts_posts_user__user_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Post"][];
                 };
             };
             /** @description Validation Error */

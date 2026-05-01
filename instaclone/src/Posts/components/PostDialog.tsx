@@ -1,18 +1,24 @@
-import { Box, Dialog, DialogContent, Paper, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { Box, Dialog, DialogContent, useMediaQuery, useTheme } from "@mui/material"
 import { Post } from "../types/Post"
 import PostCard from "./PostCard";
 import CommentsCard from "./CommentsCard";
-import CloseIcon from "@mui/icons-material/Close";
+import { useEffect, useState } from "react";
 
 export default function PostDialog(props: {
     post: Post;
     open: boolean;
     onClose: () => void;
+    onPostUpdated?: (post: Post) => void;
 }) {
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const { post, open, onClose } = props;
+    const { post, open, onClose, onPostUpdated } = props;
+    const [postState, setPostState] = useState(post);
+
+    useEffect(() => {
+        setPostState(post);
+    }, [post]);
 
     return <Dialog open={open} onClose={onClose}
         sx={{
@@ -45,8 +51,15 @@ export default function PostDialog(props: {
                 flexDirection: isMobile ? 'column-reverse' : 'row',
                 gap: '20px',
             }}>
-                <PostCard post={post} disableDialog mobileWidth="default" />
-                <CommentsCard Comments={post.comments} />
+                <PostCard post={postState} disableDialog mobileWidth="default" />
+                <CommentsCard
+                    Comments={postState.comments}
+                    postId={postState.postId}
+                    onPostUpdated={(updatedPost) => {
+                        setPostState(updatedPost);
+                        onPostUpdated?.(updatedPost);
+                    }}
+                />
             </Box>
         </DialogContent>
     </Dialog>

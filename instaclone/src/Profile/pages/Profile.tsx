@@ -69,7 +69,7 @@ export default function Profile() {
         <Box sx={{
             display: 'flex',
             alignItems: 'center',
-            height: '100%',
+            // height: '100%',
             flexDirection: 'column',
         }}>
             {id === 'me' && user && <YourProfileCard />}

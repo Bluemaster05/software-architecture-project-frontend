@@ -32,6 +32,6 @@ export default function PostPage() {
         height: '100%',
     }}>
         {!post && <CircularProgress />}
-        {post && <PostCard post={post} notClickable/>}
+        {post && <PostCard post={post} notClickable onPostUpdated={setPost} />}
     </Box>
 }

@@ -9,5 +9,6 @@ export interface Post {
     caption: string;
     timestamp: string;
     likes: number;
+    likedByCurrentUser: boolean;
     comments: Comment[];
 }

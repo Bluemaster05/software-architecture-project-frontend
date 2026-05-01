@@ -10,26 +10,30 @@ import {
     Typography,
 } from "@mui/material";
 import PostCard from "../components/PostCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Post } from "../types/Post";
 import { postsApiClient } from "../api/client";
+import AppContext from "../../Common/providors/AppContext";
 
 export default function Feed() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [caption, setCaption] = useState("");
-    const [userId, setUserId] = useState("");
-    const [username, setUsername] = useState("");
-    const [userProfilePictureUrl, setUserProfilePictureUrl] = useState("");
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [createError, setCreateError] = useState("");
 
+    const { user } = useContext(AppContext);
+
     const fetchPosts = async () => {
-        const { data, response } = await postsApiClient.GET("/posts");
+        const { data, response } = await postsApiClient.GET("/posts/feed");
         if (response.status === 200 && data) {
             setPosts(data);
         }
+    };
+
+    const handlePostUpdated = (updatedPost: Post) => {
+        setPosts((prevPosts) => prevPosts.map((post) => post.postId === updatedPost.postId ? updatedPost : post));
     };
 
     useEffect(() => {
@@ -38,26 +42,24 @@ export default function Feed() {
 
     const resetCreateForm = () => {
         setCaption("");
-        setUserId("");
-        setUsername("");
-        setUserProfilePictureUrl("");
         setImageFile(null);
         setCreateError("");
     };
 
     const handleCreatePost = async () => {
-        if (!caption.trim() || !userId.trim() || !username.trim() || !imageFile) {
-            setCreateError("Please fill userId, username, caption, and choose an image.");
+        if (!caption.trim() || !imageFile) {
+            setCreateError("Please fill caption and choose an image.");
             return;
         }
 
         setIsSubmitting(true);
         setCreateError("");
-
+        if (!user) {
+            setCreateError("User information is missing. Please try again.");
+            setIsSubmitting(false);
+            return;
+        }
         const formData = new FormData();
-        formData.append("userId", userId.trim());
-        formData.append("username", username.trim());
-        formData.append("userProfilePictureUrl", userProfilePictureUrl.trim());
         formData.append("caption", caption.trim());
         formData.append("image", imageFile); // must be File/Blob
 
@@ -95,7 +97,7 @@ export default function Feed() {
             <Button variant="contained" onClick={() => setIsCreateDialogOpen(true)}>
                 Create Post
             </Button>
-            {posts.map((post) => <PostCard key={post.postId} post={post} />)}
+            {posts.map((post) => <PostCard key={post.postId} post={post} onPostUpdated={handlePostUpdated} />)}
             <Dialog open={isCreateDialogOpen} onClose={() => setIsCreateDialogOpen(false)} fullWidth maxWidth="sm">
                 <DialogTitle>Create Post</DialogTitle>
                 <DialogContent>
@@ -106,25 +108,6 @@ export default function Feed() {
                         marginTop: "6px",
                     }}>
                         {createError && <Alert severity="error">{createError}</Alert>}
-
-                        <TextField
-                            label="User ID"
-                            value={userId}
-                            onChange={(e) => setUserId(e.target.value)}
-                            fullWidth
-                        />
-                        <TextField
-                            label="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            fullWidth
-                        />
-                        <TextField
-                            label="Profile Picture URL"
-                            value={userProfilePictureUrl}
-                            onChange={(e) => setUserProfilePictureUrl(e.target.value)}
-                            fullWidth
-                        />
                         <TextField
                             label="Caption"
                             value={caption}

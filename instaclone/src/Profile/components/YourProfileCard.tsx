@@ -5,6 +5,7 @@ import AppContext from "../../Common/providors/AppContext";
 import { useNavigate } from "react-router";
 import { Check, Search } from "@mui/icons-material";
 import { Block } from "@mui/icons-material";
+import ProfilePosts from "./ProfilePosts.tsx";
 
 export default function YourProfileCard() {
     const context = useContext(AppContext);
@@ -205,7 +206,7 @@ export default function YourProfileCard() {
                     <Tab label={"Received Requests " + requestReceived.length} {...a11yProps(3)} />
                 </Tabs>
                 <CustomTabPanel value={value} index={0}>
-                    <Typography variant="h6">Your posts will appear here.</Typography>
+                    <ProfilePosts userId={user.id} emptyMessage="Your posts will appear here." />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     {friends.length > 0 && (
