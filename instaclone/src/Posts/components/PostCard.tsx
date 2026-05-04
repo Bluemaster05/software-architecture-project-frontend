@@ -7,6 +7,7 @@ import CommentIcon from '@mui/icons-material/Comment'
 import PostDialog from "./PostDialog";
 import { useNavigate } from "react-router";
 import { postsApiClient } from "../api/client";
+import { userApiBasePath } from "../../Profile/api/client";
 
 export default function PostCard(props: { post: Post; disableDialog?: boolean; mobileWidth?: string; notClickable?: boolean; onPostUpdated?: (post: Post) => void }) {
     const { post, disableDialog, mobileWidth, notClickable, onPostUpdated } = props;
@@ -62,7 +63,7 @@ export default function PostCard(props: { post: Post; disableDialog?: boolean; m
         
     }}>
         <CardHeader
-            avatar={<Avatar src={userProfilePictureUrl}>{username.charAt(0)}</Avatar>}
+            avatar={<Avatar src={userApiBasePath + '/' +  userProfilePictureUrl}>{username.charAt(0)}</Avatar>}
             title={username}
             onClick={() => navigate(`/profile/${post.userId}`)}
         />
