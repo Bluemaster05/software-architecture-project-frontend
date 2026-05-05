@@ -1,8 +1,9 @@
-import { Box, Button, Card, CardActions, CardHeader, TextField } from "@mui/material";
+import { Avatar, Box, Button, Card, CardActions, CardHeader, TextField } from "@mui/material";
 import { Comment } from "../types/Comment";
 import { useState } from "react";
 import { postsApiClient } from "../api/client";
 import { Post } from "../types/Post";
+import { userApiBasePath } from "../../Profile/api/client";
 
 export default function CommentsCard(props: { Comments: Comment[]; postId: string; onPostUpdated?: (post: Post) => void }) {
     const { Comments, postId, onPostUpdated } = props;
@@ -32,7 +33,7 @@ export default function CommentsCard(props: { Comments: Comment[]; postId: strin
             }}>
                 {Comments.map((comment) => <Card key={comment.commentId} sx={{ padding: '10px' }}>
                     <CardHeader
-                        avatar={comment.userProfilePictureUrl ? <img src={comment.userProfilePictureUrl} alt={`${comment.username}'s profile picture`} style={{ width: '40px', height: '40px', borderRadius: '50%' }} /> : comment.username.charAt(0)}
+                        avatar={<Avatar src={userApiBasePath + '/' + comment.userProfilePictureUrl} alt={`${comment.username}'s profile picture`} />}
                         title={comment.username}
                         subheader={comment.text}
                         sx={{
